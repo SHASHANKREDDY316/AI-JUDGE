@@ -32,6 +32,7 @@ function App() {
   const [report, setReport] = useState(null);
   const [meetingLink, setMeetingLink] = useState("");
   const [message, setMessage] = useState("Backend connected. Ready for case review.");
+  const [user, setUser] = useState(null);
   const jitsiApiRef = useRef(null);
 
   const selectedCase = useMemo(
@@ -43,6 +44,7 @@ function App() {
     () => cases.filter((caseItem) => caseItem.case_type === selectedType),
     [cases, selectedType]
   );
+  
   function getCaseRoomName() {
     const baseName = selectedCase
       ? `AI-Judge-${selectedCase.case_type}-${selectedCase.case_number}-${selectedCase.case_title}`
@@ -86,7 +88,7 @@ function App() {
       height: 520,
       parentNode: container,
       userInfo: {
-        displayName: "AI Judge User",
+        displayName: user?.name || "AI Judge User",
       },
       configOverwrite: {
         prejoinPageEnabled: true,
@@ -223,6 +225,44 @@ function App() {
     setMessage("Case report and decision explanation generated.");
   }
 
+  const handleGoogleLoginSuccess = (credentialResponse) => {
+    try {
+      // Decode the JWT token to get user info
+      const base64Url = credentialResponse.credential.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      const userData = JSON.parse(jsonPayload);
+      
+      // Store user info
+      setUser({
+        email: userData.email,
+        name: userData.name,
+        picture: userData.picture,
+      });
+      
+      setMessage(`Welcome ${userData.name}! You are now logged in with Gmail.`);
+      setPage("case-types");
+    } catch (error) {
+      console.error('Login error:', error);
+      setMessage("Login failed. Please try again.");
+    }
+  };
+
+  const handleGoogleLoginError = () => {
+    setMessage("Login failed. Please try again.");
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setPage("login");
+    setMessage("You have been logged out.");
+  };
+
   const latestMood =
     report?.mood_report || hearings[hearings.length - 1]?.mood_chart || {
       Neutral: 45,
@@ -254,20 +294,17 @@ function App() {
           <p className="eyebrow">AI-assisted judicial review</p>
           <h1>AI Judge Chamber</h1>
           <p className="login-copy">
-            Sign in to manage case files, evidence, hearing notes, and AI reports.
+            Sign in with your Gmail account to manage case files, evidence, hearing notes, and AI reports.
           </p>
-          <form
-            className="form-grid"
-            onSubmit={(event) => {
-              event.preventDefault();
-              setPage("case-types");
-            }}
-          >
-            <input placeholder="Email or user ID" required />
-            <input placeholder="Password" type="password" required />
-            <button type="submit">Login</button>
-          </form>
-          <small className="muted">Demo login: enter any email and password.</small>
+          <div className="google-login-container">
+            <GoogleLogin
+              onSuccess={handleGoogleLoginSuccess}
+              onError={handleGoogleLoginError}
+              text="signin_with"
+              size="large"
+            />
+          </div>
+          <small className="muted">Secure login powered by Google OAuth</small>
         </section>
       </main>
     );
@@ -280,8 +317,9 @@ function App() {
           <div>
             <p className="eyebrow">Case Registry</p>
             <h1>All Case Types</h1>
+            {user && <p className="user-info">Logged in as: {user.email}</p>}
           </div>
-          <button onClick={() => setPage("login")}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </header>
 
         <section className="type-grid">
