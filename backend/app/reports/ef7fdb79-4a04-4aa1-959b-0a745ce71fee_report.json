@@ -1,0 +1,46 @@
+{
+    "case_report": {
+        "case_title": "CM murder case ",
+        "case_type": "Criminal",
+        "case_number": "1",
+        "parties_involved": "5",
+        "case_summary": ";jfeiprfbpkerfpijfpirybfewpurif iweurhwpjrifw[eoiruberfwen efbewoiufbrewhfqwoeifpojferb",
+        "evidence_count": 1,
+        "hearing_count": 0,
+        "key_findings": [
+            "Evidence files were reviewed and summarized.",
+            "Hearing transcript was analyzed.",
+            "Contradictions and important statements should be checked by a human reviewer."
+        ],
+        "suggested_decision": "AI recommends human legal review before final decision.",
+        "confidence_score": "Demo mode - confidence score not legally valid"
+    },
+    "decision_explanation_report": {
+        "why_this_decision": "The recommendation is based on case description, evidence summaries, and hearing transcript.",
+        "important_evidence": [
+            {
+                "id": "a30d3027-795d-498e-bc28-5e231d5966c2",
+                "case_id": "ef7fdb79-4a04-4aa1-959b-0a745ce71fee",
+                "file_name": "Katha No 251.pdf",
+                "saved_path": "C:\\Users\\ssrnd\\AI JUDGE\\backend\\app\\uploads\\evidence\\a30d3027-795d-498e-bc28-5e231d5966c2_Katha No 251.pdf",
+                "description": "sepojfbewfwef",
+                "uploaded_by": "vikram",
+                "uploaded_at": "2026-07-01T15:18:07.580200",
+                "ai_summary": {
+                    "summary": "This evidence file named 'Katha No 251.pdf' was uploaded. Description: sepojfbewfwef",
+                    "importance": "Medium",
+                    "possible_use": "Can support case facts if verified by a human reviewer."
+                }
+            }
+        ],
+        "important_warning": "Facial expression, mood, and voice tone should not be used as direct proof of truth or guilt.",
+        "final_note": "This system is an AI assistant, not a replacement for a real judge."
+    },
+    "mood_report": {
+        "Neutral": 45,
+        "Stressed": 25,
+        "Confident": 15,
+        "Angry": 10,
+        "Sad": 5
+    }
+}

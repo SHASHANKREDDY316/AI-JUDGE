@@ -1,0 +1,23 @@
+[
+    {
+        "id": "283d9075-e9d0-4069-aeaa-28c8958dac41",
+        "case_id": "ef7fdb79-4a04-4aa1-959b-0a745ce71fee",
+        "transcript": "xhfvudfhvgdfgygv",
+        "summary": {
+            "summary": "The hearing transcript was received and analyzed in demo mode.",
+            "important_points": [
+                "xhfvudfhvgdfgygv",
+                "Speaker arguments should be compared with uploaded evidence.",
+                "Any contradiction should be reviewed manually."
+            ]
+        },
+        "mood_chart": {
+            "Neutral": 45,
+            "Stressed": 25,
+            "Confident": 15,
+            "Angry": 10,
+            "Sad": 5
+        },
+        "created_at": "2026-07-01T15:40:07.697697"
+    }
+]
